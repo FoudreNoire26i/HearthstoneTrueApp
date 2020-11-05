@@ -1,6 +1,7 @@
 package com.example.hearthstonetrueapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.hearthstonetrueapp.R
+import com.example.hearthstonetrueapp.dataClass.CardsRepository
 
 class HomeFragment : Fragment() {
 
@@ -24,9 +25,15 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
+        })*/
+
+        CardsRepository.magicCardLiveData.observe(viewLifecycleOwner, {
+            textView.text = it.name
         })
+
+        Log.e("blop1", CardsRepository.getCardById(1).value?.name ?: "default");
         return root
     }
 }
