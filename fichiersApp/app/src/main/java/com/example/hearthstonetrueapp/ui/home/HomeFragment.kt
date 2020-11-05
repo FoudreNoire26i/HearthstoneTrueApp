@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +34,8 @@ class HomeFragment : Fragment() {
             textView.text = it.name
         })
 
-        Log.e("blop1", CardsRepository.getCardById(1).value?.name ?: "default");
+
+        Log.e("blop1", ""+CardsRepository.getCards().value?.cards?.size );
         return root
     }
 }
