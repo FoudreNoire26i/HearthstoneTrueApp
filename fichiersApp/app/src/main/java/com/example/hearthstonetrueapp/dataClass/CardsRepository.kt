@@ -16,7 +16,7 @@ object CardsRepository {
     var cardsListLiveData = MutableLiveData<CardsPageList>()
 
 
-    fun getCardById(id : Int) : LiveData<Card> {
+    fun getCardById(id: Int): LiveData<Card> {
         Log.e("loadAndroidData", "yes")
         apiCard.getCardById().enqueue(object : Callback<Card> {
 
@@ -32,12 +32,22 @@ object CardsRepository {
         return cardListLiveData
     }
 
-    fun getCards() : LiveData<CardsPageList> {
-        apiCard.getCards().enqueue(object : Callback<CardsPageList> {
-
-            override fun onResponse(call: Call<CardsPageList>, response: Response<CardsPageList>) {
-                Log.e("blopcards", response.body()?.toString() ?: "def")
+    fun getCards(allPage: Boolean, pageNumber: Int = 1): MutableLiveData<CardsPageList> {
+        val truePageNumber: Int =
+            if (allPage) 1
+            else pageNumber
+        apiCard.getCardsByPage(page = truePageNumber).enqueue(object : Callback<CardsPageList> {
+            override fun onResponse(
+                call: Call<CardsPageList>,
+                response: Response<CardsPageList>
+            ) {
                 response.body()?.let { cardsListLiveData.postValue(it) }
+                val pageCount = response.body()?.pageCount ?: 0
+                if (allPage) {
+                    for (i in 2..pageCount) {
+                        getCards(false, i)
+                    }
+                }
             }
 
             override fun onFailure(call: Call<CardsPageList>, t: Throwable) {

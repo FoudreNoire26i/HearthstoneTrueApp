@@ -30,12 +30,12 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
 
-        CardsRepository.cardListLiveData.observe(viewLifecycleOwner, {
-            textView.text = it.name
+        CardsRepository.cardsListLiveData.observe(viewLifecycleOwner, {
+            textView.text = it.cards.get(1).name
         })
 
 
-        Log.e("blop1", ""+CardsRepository.getCards().value?.cards?.size );
+        Log.e("blop1", ""+CardsRepository.getCards(true).value?.cards?.size )
         return root
     }
 }
