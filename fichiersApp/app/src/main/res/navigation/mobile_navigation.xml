@@ -22,4 +22,10 @@
         android:name="com.example.hearthstonetrueapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_cardList"
+        android:name="com.example.hearthstonetrueapp.ui.Card.CardListFragment"
+        android:label="@string/CardListTitle"
+        tools:layout="@layout/fragment_card_list" />
 </navigation>

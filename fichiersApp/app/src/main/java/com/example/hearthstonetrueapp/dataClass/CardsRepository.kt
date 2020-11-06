@@ -1,6 +1,7 @@
 package com.example.hearthstonetrueapp.dataClass
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.hearthstonetrueapp.api.ApiHearthstoneFactory
 import com.example.hearthstonetrueapp.dataClass.model.Card
@@ -11,10 +12,12 @@ import retrofit2.Response
 
 object CardsRepository {
     private val apiCard = ApiHearthstoneFactory.myCardsApi
-    var magicCardLiveData = MutableLiveData<Card>()
-    var magicCardsLiveData = MutableLiveData<CardsPageList>()
+    var cardListLiveData = MutableLiveData<Card>()
+    var cardsListLiveData = MutableLiveData<CardsPageList>()
 
-    fun getCardById(id : Int) : MutableLiveData<Card>{
+
+    fun getCardById(id : Int) : LiveData<Card> {
+        Log.e("loadAndroidData", "yes")
         apiCard.getCardById().enqueue(object : Callback<Card> {
 
             override fun onFailure(call: Call<Card>, t: Throwable) {
@@ -22,25 +25,25 @@ object CardsRepository {
             }
 
             override fun onResponse(call: Call<Card>, response: Response<Card>) {
-                response.body()?.let { magicCardLiveData.postValue(it) }
+                response.body()?.let { cardListLiveData.postValue(it) }
+                Log.e("blop", cardListLiveData.value?.name ?: "default");
             }
         })
-        return magicCardLiveData
+        return cardListLiveData
     }
 
-    fun getCards() : MutableLiveData<CardsPageList> {
+    fun getCards() : LiveData<CardsPageList> {
         apiCard.getCards().enqueue(object : Callback<CardsPageList> {
 
             override fun onResponse(call: Call<CardsPageList>, response: Response<CardsPageList>) {
                 Log.e("blopcards", response.body()?.toString() ?: "def")
-                response.body()?.let { magicCardsLiveData.postValue(it) }
+                response.body()?.let { cardsListLiveData.postValue(it) }
             }
 
             override fun onFailure(call: Call<CardsPageList>, t: Throwable) {
                 Log.e("on Failure :", "retrofit error")
             }
         })
-        return magicCardsLiveData
+        return cardsListLiveData
     }
 }
-

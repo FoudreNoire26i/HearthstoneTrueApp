@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
 
-        CardsRepository.magicCardLiveData.observe(viewLifecycleOwner, {
+        CardsRepository.cardListLiveData.observe(viewLifecycleOwner, {
             textView.text = it.name
         })
 
