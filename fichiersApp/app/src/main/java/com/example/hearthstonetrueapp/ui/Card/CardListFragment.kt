@@ -70,12 +70,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         })*/
 
         cardListViewModel.cardsListLiveData.observe(viewLifecycleOwner, Observer {
-
-            val list = mutableListOf<Card>()
-            it.cards.forEach { card ->
-                list.add(card)
-            }
-            cardListAdapter.setData(list)
+            cardListAdapter.setData(it.cards)
         })
     }
 

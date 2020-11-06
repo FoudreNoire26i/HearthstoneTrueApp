@@ -41,7 +41,13 @@ object CardsRepository {
                 call: Call<CardsPageList>,
                 response: Response<CardsPageList>
             ) {
-                response.body()?.let { cardsListLiveData.postValue(it) }
+
+                response.body()?.let {
+                    val tmpList = cardsListLiveData.value?.cards?.toMutableList()
+                    tmpList?.addAll(it.cards)
+                    val tmp = CardsPageList(cards = tmpList ?: emptyList(), pageCount = it.pageCount, cardCount = it.cardCount, pageId = it.pageId)
+                    cardsListLiveData.postValue(tmp)
+                }
                 val pageCount = response.body()?.pageCount ?: 0
                 if (allPage) {
                     for (i in 2..pageCount) {
@@ -56,4 +62,5 @@ object CardsRepository {
         })
         return cardsListLiveData
     }
+
 }

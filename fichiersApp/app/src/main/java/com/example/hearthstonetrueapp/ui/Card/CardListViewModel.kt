@@ -17,7 +17,7 @@ class CardListViewModel : ViewModel() {
     var cardListLiveData: LiveData<Card> = this.getCardsById()
     var cardsListLiveData: LiveData<CardsPageList> = this.getCards()
 
-    private fun getCards() = CardsRepository.getCards()
+    private fun getCards() = CardsRepository.getCards(true)
     fun getCardsById() = CardsRepository.getCardById(1)
 
 }

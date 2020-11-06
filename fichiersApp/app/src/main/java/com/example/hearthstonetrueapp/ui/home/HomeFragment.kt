@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
         })*/
 
         CardsRepository.cardsListLiveData.observe(viewLifecycleOwner, {
-            textView.text = it.cards.get(1).name
+            if (it.cards.isNotEmpty()) textView.text = it.cards.get(1).name
         })
 
 

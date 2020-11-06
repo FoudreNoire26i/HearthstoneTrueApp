@@ -19,11 +19,10 @@ interface ApiHearthstone {
                     @Query("locale") locale: String = local
     ) : Call<Card>
 
-    @Headers("Authorization: Bearer ${accessToken}")
     @GET("cards")
     fun getCardsByPage(
         @Query("page") page: Int,
-        //@Query("access_token") token : String = accessToken,
+        @Query("access_token") token : String = accessToken,
         @Query("locale") locale: String = local
     ) : Call<CardsPageList>
 }
