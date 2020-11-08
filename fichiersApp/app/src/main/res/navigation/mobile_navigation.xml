@@ -27,5 +27,16 @@
         android:id="@+id/nav_cardList"
         android:name="com.example.hearthstonetrueapp.ui.Card.CardListFragment"
         android:label="@string/CardListTitle"
-        tools:layout="@layout/fragment_card_list" />
+        tools:layout="@layout/fragment_card_list" >
+        <action
+            android:id="@+id/action_nav_cardList_to_nav_cardDetail"
+            app:destination="@id/nav_cardDetail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_cardDetail"
+        android:name="com.example.hearthstonetrueapp.ui.Card.CardDetailFragment"
+        android:label="@string/card_detail_text"
+        tools:layout="@layout/fragment_card_detail" />
+
 </navigation>

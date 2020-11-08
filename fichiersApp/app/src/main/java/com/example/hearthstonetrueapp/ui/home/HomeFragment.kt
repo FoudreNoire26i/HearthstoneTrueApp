@@ -26,16 +26,9 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })*/
-
-        CardsRepository.cardsListLiveData.observe(viewLifecycleOwner, {
-            if (it.cards.isNotEmpty()) textView.text = it.cards.get(1).name
         })
-
-
-        Log.e("blop1", ""+CardsRepository.getCards(true).value?.cards?.size )
         return root
     }
 }

@@ -9,11 +9,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
+import kotlinx.android.synthetic.main.fragment_card_list.*
 
 class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener {
 
@@ -21,9 +23,6 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
 
     lateinit var cardListRecyclerView: RecyclerView
-    // lateinit var cardListAdapter: RecyclerView.Adapter<CardListAdapter.CardListViewHolder>
-    lateinit var cardListLayoutManager: RecyclerView.LayoutManager
-
     lateinit var cardListGridLayoutManager: RecyclerView.LayoutManager
 
 
@@ -32,15 +31,10 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        cardListViewModel =
-            ViewModelProvider(this).get(CardListViewModel::class.java)
+        activity?.run { cardListViewModel = ViewModelProvider(this,CardListViewModel).get() }
+
 
         val root = inflater.inflate(R.layout.fragment_card_list, container, false)
-        val textView: TextView = root.findViewById(R.id.text_cardList)
-
-        cardListViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
 
         return root
     }
@@ -48,12 +42,10 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         cardListRecyclerView = view.findViewById<RecyclerView>(R.id.cardListRecyclerView)
 
-        cardListLayoutManager = LinearLayoutManager(this.context)
-
-        cardListGridLayoutManager = GridLayoutManager(this.context,3)
-
+        cardListGridLayoutManager = GridLayoutManager(this.context, 3)
         cardListRecyclerView.layoutManager = cardListGridLayoutManager
 
         val cardListAdapter = CardListAdapter(this)
@@ -62,20 +54,29 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
         cardListRecyclerView.setHasFixedSize(true)
 
-       /* cardListViewModel.cardListLiveData.observe(viewLifecycleOwner, Observer {
-
-            val list = mutableListOf<Card>()
-            list.add(it)
-            cardListAdapter.setData(list)
-        })*/
-
         cardListViewModel.cardsListLiveData.observe(viewLifecycleOwner, Observer {
             cardListAdapter.setData(it.cards)
+        })
+
+        searchBar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                cardListAdapter.setData(
+                    cardListViewModel.getMyCardList().filter {
+                        it.name.contains(newText as CharSequence)
+                    }
+                )
+                return true
+            }
         })
     }
 
     override fun onClick(dataPosition: Int, card: Card) {
-        Log.d("test","ceci est un test du onClickListener")
+        cardListViewModel.mySelectedCard = card
+        findNavController().navigate(R.id.action_nav_cardList_to_nav_cardDetail)
     }
 
 }

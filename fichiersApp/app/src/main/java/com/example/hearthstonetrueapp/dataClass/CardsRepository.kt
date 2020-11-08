@@ -14,6 +14,7 @@ object CardsRepository {
     private val apiCard = ApiHearthstoneFactory.myCardsApi
     var cardListLiveData = MutableLiveData<Card>()
     var cardsListLiveData = MutableLiveData<CardsPageList>()
+    var myCardsList = mutableListOf<Card>()
 
 
     fun getCardById(id: Int): LiveData<Card> {
@@ -47,6 +48,7 @@ object CardsRepository {
                     tmpList?.addAll(it.cards)
                     val tmp = CardsPageList(cards = tmpList ?: emptyList(), pageCount = it.pageCount, cardCount = it.cardCount, pageId = it.pageId)
                     cardsListLiveData.postValue(tmp)
+                    myCardsList.addAll(it.cards)
                 }
                 val pageCount = response.body()?.pageCount ?: 0
                 if (allPage) {
@@ -63,4 +65,7 @@ object CardsRepository {
         return cardsListLiveData
     }
 
+    fun getMyCardList(): MutableList<Card> {
+        return myCardsList
+    }
 }

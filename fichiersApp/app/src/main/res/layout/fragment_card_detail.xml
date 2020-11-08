@@ -5,33 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/cardDetailImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-
-
-        />
-
-    // app:layout_constraintDimensionRatio="H,16:9"
-    // dans ce cas là penser à passer layout_w et layout_h en 0dp
-
-
     <TextView
         android:id="@+id/cardDetailText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardDetailImage"
+        android:layout_margin="30dp"
+
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:textColor="@android:color/black"
 
         />
+
+
+    <ImageView
+        android:id="@+id/cardDetailImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/cardDetailText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    // app:layout_constraintDimensionRatio="H,16:9"
+    // dans ce cas là penser à passer layout_w et layout_h en 0dp
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

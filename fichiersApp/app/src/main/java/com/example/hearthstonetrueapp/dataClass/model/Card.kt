@@ -3,7 +3,6 @@ package com.example.hearthstonetrueapp.dataClass.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
 data class Card (
     @SerializedName("id")
     @Expose
