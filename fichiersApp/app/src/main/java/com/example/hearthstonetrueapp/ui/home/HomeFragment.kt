@@ -12,10 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
+import com.example.hearthstonetrueapp.dataClass.ClassRepository
+import com.example.hearthstonetrueapp.ui.Classe.ClassesViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var classeViewModel: ClassesViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -24,18 +27,28 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
+        classeViewModel =
+            ViewModelProvider(this).get(ClassesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })*/
 
-        CardsRepository.cardsListLiveData.observe(viewLifecycleOwner, {
-            if (it.cards.isNotEmpty()) textView.text = it.cards.get(1).name
+/*
+        classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
+            classeViewModel.setHeroListByClass()
+        })*/
+        classeViewModel.heroListLiveData.observe(viewLifecycleOwner, {
+            var tmp = ""
+            it.forEach {
+                tmp += "${it.name}\n"
+            }
         })
 
 
-        Log.e("blop1", ""+CardsRepository.getCards(true).value?.cards?.size )
+
+        Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
         return root
     }
 }

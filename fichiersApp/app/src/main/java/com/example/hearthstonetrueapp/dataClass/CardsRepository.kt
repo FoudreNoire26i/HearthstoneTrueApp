@@ -48,8 +48,8 @@ object CardsRepository {
                     val tmp = CardsPageList(cards = tmpList ?: emptyList(), pageCount = it.pageCount, cardCount = it.cardCount, pageId = it.pageId)
                     cardsListLiveData.postValue(tmp)
                 }
-                val pageCount = response.body()?.pageCount ?: 0
                 if (allPage) {
+                    val pageCount = response.body()?.pageCount ?: 0
                     for (i in 2..pageCount) {
                         getCards(false, i)
                     }
