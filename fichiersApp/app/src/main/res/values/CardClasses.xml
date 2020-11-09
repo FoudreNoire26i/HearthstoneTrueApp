@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cardClasses">
-        <item />
+        <item>Classe (Aucune)</item>
         <item>Neutre</item>
         <item>Druide</item>
         <item>Chasseur de démon</item>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="coutEnMana">
-        <item />
+        <item>Mana (Aucun)</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -9,10 +9,6 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>+</item>
+        <item>7 et +</item>
     </string-array>
 </resources>

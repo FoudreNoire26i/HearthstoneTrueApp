@@ -12,7 +12,7 @@ import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import kotlinx.android.synthetic.main.item_filter.view.*
 
-class FilterListAdapter(): RecyclerView.Adapter<FilterListAdapter.FilterListViewHolder>() {
+class FilterListAdapter(private val filterListener: setFilterListener?): RecyclerView.Adapter<FilterListAdapter.FilterListViewHolder>() {
 
     var adapterFilterList = emptyList<FilterItemForSpinner>()
 
@@ -49,14 +49,14 @@ class FilterListAdapter(): RecyclerView.Adapter<FilterListAdapter.FilterListView
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
-                position: Int,
+                position2: Int,
                 id: Long
             ) {
-                Toast.makeText(
-                    parent?.context,"filtre sur : "
-                            + filterTabValues[position] , Toast.LENGTH_SHORT).show()
+                if (position2!= 0){
+                    Toast.makeText(parent?.context,"filtre sur : " + filterTabValues[position2] , Toast.LENGTH_SHORT).show()
+                    filterListener?.returnFilter(adapterFilterList.get(position).filterName,filterTabValues[position2])
+                }
             }
-
         }
     }
 
@@ -64,4 +64,9 @@ class FilterListAdapter(): RecyclerView.Adapter<FilterListAdapter.FilterListView
         this.adapterFilterList = spinnerList
         notifyDataSetChanged()
     }
+
+    interface setFilterListener {
+        fun returnFilter(filterOn: String,value: String)
+    }
+
 }

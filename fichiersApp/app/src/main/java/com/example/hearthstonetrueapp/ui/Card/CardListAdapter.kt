@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_image_card.view.*
 
 class CardListAdapter(private val clickListener: CardListAdapterClickListener?): RecyclerView.Adapter<CardListAdapter.CardListViewHolder>() {
 
-    var adapterCardList =  emptyList<Card>()
+    var adapterCardList = emptyList<Card>()
 
     class CardListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){}
 

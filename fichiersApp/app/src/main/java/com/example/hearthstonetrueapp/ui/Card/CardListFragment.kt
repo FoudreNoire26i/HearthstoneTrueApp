@@ -11,14 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import kotlinx.android.synthetic.main.fragment_card_list.*
 
-class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener {
+class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener,FilterListAdapter.setFilterListener {
 
     private lateinit var cardListViewModel: CardListViewModel
 
@@ -49,9 +47,13 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
         cardListGridLayoutManager = GridLayoutManager(this.context, 3)
         cardListRecyclerView.layoutManager = cardListGridLayoutManager
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(cardListRecyclerView)
 
         filterListGridLayoutManager = LinearLayoutManager(this.context,RecyclerView.HORIZONTAL,false)
         filterListRecyclerView.layoutManager = filterListGridLayoutManager
+        snapHelper.attachToRecyclerView(filterListRecyclerView)
+
 
         val cardListAdapter = CardListAdapter(this)
         cardListRecyclerView.adapter = cardListAdapter
@@ -60,7 +62,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
             cardListAdapter.setData(it.cards)
         })
 
-        val filterListAdapter = FilterListAdapter()
+        val filterListAdapter = FilterListAdapter(this)
         filterListRecyclerView.adapter = filterListAdapter
         filterListRecyclerView.setHasFixedSize(true)
 
@@ -77,6 +79,11 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
         var filtreParClasse = FilterItemForSpinner("Classes",R.array.cardClasses)
         myFilterList.add(filtreParClasse)
+
+        ///// filtre par rareté /////
+
+        var filtreParRareté = FilterItemForSpinner("Pv",R.array.cardRarety)
+        myFilterList.add(filtreParRareté)
 
         ///// filtre par attaque /////
 
@@ -115,6 +122,17 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
     override fun onClick(dataPosition: Int, card: Card) {
         cardListViewModel.mySelectedCard = card
         findNavController().navigate(R.id.action_nav_cardList_to_nav_cardDetail)
+    }
+
+    override fun returnFilter(filterOn: String, value: String) {
+        Log.d("testFiltre",filterOn)
+        Log.d("testFiltre",value)
+        if(filterOn == "Coup en mana"){
+            cardListViewModel.getMyCardList().filter {
+                it.manaCost == value.toInt()
+            }
+        }
+
     }
 
 }
