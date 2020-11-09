@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cardClasses">
+        <item />
+        <item>Neutre</item>
+        <item>Druide</item>
+        <item>Chasseur de démon</item>
+        <item>Mage</item>
+        <item>Prêtre</item>
+        <item>Guerrier</item>
+        <item>Paladin</item>
+        <item>Chasseur</item>
+        <item>Voleur</item>
+        <item>Chaman</item>
+        <item>Démoniste</item>
+    </string-array>
+</resources>

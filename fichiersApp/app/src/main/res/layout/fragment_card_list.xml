@@ -7,6 +7,48 @@
     android:id="@+id/fragment_card_list"
     tools:context=".ui.Card.CardListFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/filterTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Filtre :"
+        android:textSize="18sp"
+
+        android:layout_margin="6dp"
+
+        android:textStyle="bold"
+        android:gravity="center"
+
+        app:layout_constraintEnd_toStartOf="@+id/filterListRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        app:layout_constraintBottom_toTopOf="@+id/cardListRecyclerView"
+        app:layout_constraintHorizontal_weight="2"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filterListRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/filterTextView"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        app:layout_constraintBottom_toTopOf="@+id/cardListRecyclerView"
+        app:layout_constraintHorizontal_weight="9"
+
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,20 +58,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
 
         app:spanCount="3"
 
-        />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
