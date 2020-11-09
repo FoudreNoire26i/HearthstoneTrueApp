@@ -16,9 +16,11 @@ import retrofit2.http.Query
 //https://futurestud.io/tutorials/oauth-2-on-android-with-retrofit
 
 interface ApiHearthstone {
-    @GET("cards/52119")
-    fun getCardById(@Query("access_token") token : String = accessToken,
-                    @Query("locale") locale: String = local
+    @GET("cards/{id}")
+    fun getCardById(
+        @Path("id") id : String,
+        @Query("access_token") token : String = accessToken,
+        @Query("locale") locale: String = local
     ) : Call<Card>
 
     @GET("cards")

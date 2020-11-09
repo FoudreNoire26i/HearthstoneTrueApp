@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
+import com.example.hearthstonetrueapp.dataClass.HeroRepository
 import com.example.hearthstonetrueapp.ui.Classe.ClassesViewModel
 
 class HomeFragment : Fragment() {
@@ -34,17 +35,6 @@ class HomeFragment : Fragment() {
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })*/
-
-/*
-        classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
-            classeViewModel.setHeroListByClass()
-        })*/
-        classeViewModel.heroListLiveData.observe(viewLifecycleOwner, {
-            var tmp = ""
-            it.forEach {
-                tmp += "${it.name}\n"
-            }
-        })
 
 
 
