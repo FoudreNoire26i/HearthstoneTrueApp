@@ -12,10 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
+import com.example.hearthstonetrueapp.dataClass.ClassRepository
+import com.example.hearthstonetrueapp.dataClass.HeroRepository
+import com.example.hearthstonetrueapp.ui.Classe.ClassesViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var classeViewModel: ClassesViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -24,11 +28,17 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
+        classeViewModel =
+            ViewModelProvider(this).get(ClassesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })
+        })*/
+
+
+
+        Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
         return root
     }
 }
