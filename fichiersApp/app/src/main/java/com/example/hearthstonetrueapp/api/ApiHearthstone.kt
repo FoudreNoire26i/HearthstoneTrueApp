@@ -1,10 +1,9 @@
 package com.example.hearthstonetrueapp.api
 
 import com.example.hearthstonetrueapp.accessToken
-import com.example.hearthstonetrueapp.dataClass.model.Card
-import com.example.hearthstonetrueapp.dataClass.model.CardsPageList
-import com.example.hearthstonetrueapp.dataClass.model.Classe
-import com.example.hearthstonetrueapp.dataClass.model.Hero
+import com.example.hearthstonetrueapp.client_id
+import com.example.hearthstonetrueapp.client_secret
+import com.example.hearthstonetrueapp.dataClass.model.*
 import com.example.hearthstonetrueapp.local
 import retrofit2.Call
 import retrofit2.http.GET
@@ -41,4 +40,5 @@ interface ApiHearthstone {
                     @Query("access_token") token : String = accessToken,
                     @Query("locale") locale: String = local
     ) : Call<Hero>
+
 }

@@ -14,6 +14,7 @@ import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
 import com.example.hearthstonetrueapp.dataClass.HeroRepository
+import com.example.hearthstonetrueapp.dataClass.TokenRepository
 import com.example.hearthstonetrueapp.ui.Classe.ClassesViewModel
 
 class HomeFragment : Fragment() {
@@ -36,6 +37,9 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
 
+        ClassRepository.classeListLiveData.observe(viewLifecycleOwner, {
+            Log.e("blopCLasse", ""+it.get(1).name )
+        })
 
 
         Log.e("blop1", ""+ClassRepository.getClasses().value?.size )

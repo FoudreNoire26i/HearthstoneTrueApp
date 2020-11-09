@@ -1,6 +1,7 @@
 package com.example.hearthstonetrueapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -13,8 +14,12 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import com.example.hearthstonetrueapp.dataClass.TokenRepository
+import com.example.hearthstonetrueapp.ui.home.HomeViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -40,6 +45,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_cardList), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //get current token --> dans le splash screen
+        TokenRepository.tokenLiveData.observe(this,{
+            accessToken = it.access_token
+
+        } )
+
+        Log.i("blopfuck",TokenRepository.getToken().value?.access_token ?:"nul")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

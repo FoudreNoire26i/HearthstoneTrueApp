@@ -19,15 +19,15 @@ object CardsRepository {
 
     fun getCardById(id: Int): LiveData<Card> {
         Log.e("loadAndroidData", "yes")
-        apiCard.getCardById().enqueue(object : Callback<Card> {
+        apiCard.getCardById("1").enqueue(object : Callback<Card> {
 
             override fun onFailure(call: Call<Card>, t: Throwable) {
-                Log.e("on Failure :", "retrofit error")
+                Log.e("on Failure :", "retrofit get card by id error")
             }
 
             override fun onResponse(call: Call<Card>, response: Response<Card>) {
                 response.body()?.let { cardListLiveData.postValue(it) }
-                Log.e("blop", cardListLiveData.value?.name ?: "default");
+
             }
         })
         return cardListLiveData
@@ -59,7 +59,7 @@ object CardsRepository {
             }
 
             override fun onFailure(call: Call<CardsPageList>, t: Throwable) {
-                Log.e("on Failure :", "retrofit error")
+                Log.e("on Failure :", "retrofit get cards error")
             }
         })
         return cardsListLiveData
