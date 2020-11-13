@@ -48,7 +48,7 @@ object HeroRepository {
                 }
 
                 override fun onFailure(call: Call<Hero>, t: Throwable) {
-                    Log.e("on Failure :", "retrofit error")
+                    Log.e("on Failure :", "retrofit get hero error")
                     //heroListLiveData.postValue(emptyList())
                 }
             })

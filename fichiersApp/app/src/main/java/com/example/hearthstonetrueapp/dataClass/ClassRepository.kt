@@ -42,7 +42,7 @@ object ClassRepository {
                 }
 
                 override fun onFailure(call: Call<List<Classe>>, t: Throwable) {
-                    Log.e("on Failure :", "retrofit error")
+                    Log.e("on Failure :", "retrofit get classes error")
                 }
             })
             return classeListLiveData
