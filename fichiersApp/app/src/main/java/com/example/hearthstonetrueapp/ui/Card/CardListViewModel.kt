@@ -15,9 +15,9 @@ class CardListViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
 
-    var cardListLiveData: LiveData<Card> = this.getCardsById()
     var mySelectedCard: Card? = null
     var cardsListLiveData: LiveData<CardsPageList> = this.getCards()
+    var listeDeCartesLiveData: LiveData<List<Card>> = this.getMyCardsFromMutableLiveData()
 
 
     private fun getCards() = CardsRepository.getCards(true)
@@ -25,7 +25,7 @@ class CardListViewModel : ViewModel() {
 
     fun getMyCardList() = CardsRepository.getMyCardList()
 
-
+    fun getMyCardsFromMutableLiveData() = CardsRepository.getMyCardsFromMutableLiveData()
 
     companion object Factory: ViewModelProvider.Factory{
 

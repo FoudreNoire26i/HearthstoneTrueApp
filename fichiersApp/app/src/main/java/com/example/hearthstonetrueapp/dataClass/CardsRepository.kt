@@ -12,25 +12,27 @@ import retrofit2.Response
 
 object CardsRepository {
     private val apiCard = ApiHearthstoneFactory.myCardsApi
-    var cardListLiveData = MutableLiveData<Card>()
-    var cardsListLiveData = MutableLiveData<CardsPageList>()
+    var cardByIdLiveData = MutableLiveData<Card>()
+    var cardPageLiveData = MutableLiveData<CardsPageList>()
+    var cardslistLiveData = MutableLiveData<List<Card>>()
     var myCardsList = mutableListOf<Card>()
+
 
 
     fun getCardById(id: Int): LiveData<Card> {
         Log.e("loadAndroidData", "yes")
-        apiCard.getCardById().enqueue(object : Callback<Card> {
+        apiCard.getCardById("1").enqueue(object : Callback<Card> {
 
             override fun onFailure(call: Call<Card>, t: Throwable) {
                 Log.e("on Failure :", "retrofit error")
             }
 
             override fun onResponse(call: Call<Card>, response: Response<Card>) {
-                response.body()?.let { cardListLiveData.postValue(it) }
-                Log.e("blop", cardListLiveData.value?.name ?: "default");
+                response.body()?.let { cardByIdLiveData.postValue(it) }
+                Log.e("blop", cardByIdLiveData.value?.name ?: "default");
             }
         })
-        return cardListLiveData
+        return cardByIdLiveData
     }
 
     fun getCards(allPage: Boolean, pageNumber: Int = 1): MutableLiveData<CardsPageList> {
@@ -38,17 +40,18 @@ object CardsRepository {
             if (allPage) 1
             else pageNumber
         apiCard.getCardsByPage(page = truePageNumber).enqueue(object : Callback<CardsPageList> {
+
             override fun onResponse(
                 call: Call<CardsPageList>,
                 response: Response<CardsPageList>
             ) {
 
                 response.body()?.let {
-                    val tmpList = cardsListLiveData.value?.cards?.toMutableList()
+                    val tmpList = mutableListOf<Card>()
                     tmpList?.addAll(it.cards)
                     val tmp = CardsPageList(cards = tmpList ?: emptyList(), pageCount = it.pageCount, cardCount = it.cardCount, pageId = it.pageId)
-                    cardsListLiveData.postValue(tmp)
-                    myCardsList.addAll(it.cards)
+                    cardPageLiveData.postValue(tmp)
+                    myCardsList.addAll(tmp.cards)
                 }
                 if (allPage) {
                     val pageCount = response.body()?.pageCount ?: 0
@@ -56,16 +59,21 @@ object CardsRepository {
                         getCards(false, i)
                     }
                 }
+                cardslistLiveData.postValue(myCardsList)
             }
 
             override fun onFailure(call: Call<CardsPageList>, t: Throwable) {
                 Log.e("on Failure :", "retrofit error")
             }
         })
-        return cardsListLiveData
+        return cardPageLiveData
     }
 
     fun getMyCardList(): MutableList<Card> {
         return myCardsList
+    }
+
+    fun getMyCardsFromMutableLiveData(): LiveData<List<Card>>{
+        return cardslistLiveData
     }
 }

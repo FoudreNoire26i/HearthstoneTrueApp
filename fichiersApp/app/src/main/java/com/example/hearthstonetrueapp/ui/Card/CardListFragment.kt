@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +15,13 @@ import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import kotlinx.android.synthetic.main.fragment_card_list.*
 
-class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener,FilterListAdapter.setFilterListener {
+class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener, SetFilterListener {
 
     private lateinit var cardListViewModel: CardListViewModel
 
     lateinit var cardListRecyclerView: RecyclerView
     lateinit var filterListRecyclerView: RecyclerView
+    lateinit var cardListAdapter: CardListAdapter
 
     lateinit var cardListGridLayoutManager: RecyclerView.LayoutManager
     lateinit var filterListGridLayoutManager: RecyclerView.LayoutManager
@@ -31,11 +31,10 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.run { cardListViewModel = ViewModelProvider(this,CardListViewModel).get() }
+        activity?.run {
+            cardListViewModel = ViewModelProvider(this,CardListViewModel).get() }
 
-        val root = inflater.inflate(R.layout.fragment_card_list, container, false)
-
-        return root
+        return inflater.inflate(R.layout.fragment_card_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,20 +46,23 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
         cardListGridLayoutManager = GridLayoutManager(this.context, 3)
         cardListRecyclerView.layoutManager = cardListGridLayoutManager
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(cardListRecyclerView)
+//        val snapHelper = PagerSnapHelper()
+//        snapHelper.attachToRecyclerView(cardListRecyclerView)
 
         filterListGridLayoutManager = LinearLayoutManager(this.context,RecyclerView.HORIZONTAL,false)
         filterListRecyclerView.layoutManager = filterListGridLayoutManager
-        snapHelper.attachToRecyclerView(filterListRecyclerView)
+//        snapHelper.attachToRecyclerView(filterListRecyclerView)
 
 
-        val cardListAdapter = CardListAdapter(this)
+        cardListAdapter = CardListAdapter(this)
         cardListRecyclerView.adapter = cardListAdapter
         cardListRecyclerView.setHasFixedSize(true)
-        cardListViewModel.cardsListLiveData.observe(viewLifecycleOwner, Observer {
-            cardListAdapter.setData(it.cards)
+        cardListViewModel.listeDeCartesLiveData.observe(viewLifecycleOwner, Observer {
+            it.sortedBy { it.classId }
+            cardListAdapter.setData(it)
+
         })
+
 
         val filterListAdapter = FilterListAdapter(this)
         filterListRecyclerView.adapter = filterListAdapter
@@ -72,34 +74,35 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
         ///// filtre par coup en mana /////
 
-        var filtreParCoupEnManaDC = FilterItemForSpinner("Coup en mana",R.array.coutEnMana)
+        var filtreParCoupEnManaDC = FilterItemForSpinner("Cout en mana",R.array.coutEnMana,false,"")
         myFilterList.add(filtreParCoupEnManaDC)
 
         ///// filtre par classe /////
 
-        var filtreParClasse = FilterItemForSpinner("Classes",R.array.cardClasses)
+        var filtreParClasse = FilterItemForSpinner("Classes",R.array.cardClasses,false,"")
         myFilterList.add(filtreParClasse)
 
         ///// filtre par rareté /////
 
-        var filtreParRareté = FilterItemForSpinner("Pv",R.array.cardRarety)
-        myFilterList.add(filtreParRareté)
+        var filtreParRarete = FilterItemForSpinner("Pv",R.array.cardRarety,false, "")
+        myFilterList.add(filtreParRarete)
 
         ///// filtre par attaque /////
 
-        var filtreParAttaque = FilterItemForSpinner("Attaque",R.array.cardAttack)
+        var filtreParAttaque = FilterItemForSpinner("Attaque",R.array.cardAttack,false, "")
         myFilterList.add(filtreParAttaque)
 
         ///// filtre par pv /////
 
-        var filtreParPV = FilterItemForSpinner("Pv",R.array.cardHealth)
+        var filtreParPV = FilterItemForSpinner("Pv",R.array.cardHealth,false, "")
         myFilterList.add(filtreParPV)
 
+        ///// filtre par extensions /////
 
+        var filtreParExtension = FilterItemForSpinner("Extension",R.array.cardExtension,false, "")
+        myFilterList.add(filtreParExtension)
 
         filterListAdapter.setFilter(myFilterList)
-
-        Log.d("listTest",myFilterList.toString())
 
         ///////////////// Fin de la création et ajout des filtres ////////////////
 
@@ -113,6 +116,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
                     cardListViewModel.getMyCardList().filter {
                         it.name.contains(newText as CharSequence)
                     }
+
                 )
                 return true
             }
@@ -124,15 +128,41 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         findNavController().navigate(R.id.action_nav_cardList_to_nav_cardDetail)
     }
 
-    override fun returnFilter(filterOn: String, value: String) {
-        Log.d("testFiltre",filterOn)
-        Log.d("testFiltre",value)
-        if(filterOn == "Coup en mana"){
-            cardListViewModel.getMyCardList().filter {
-                it.manaCost == value.toInt()
-            }
-        }
+    override fun returnFilter(filterList: List<FilterItemForSpinner>) {
+         cardListViewModel.getMyCardsFromMutableLiveData().observe(viewLifecycleOwner, Observer {cardsList ->
 
+             var listToFilter = cardsList
+
+             filterList.forEach { filterConcerned->
+
+//                 Log.d("testFiltre",filterConcerned.filterName)
+//                 Log.d("testFiltre",filterConcerned.isChecked.toString())
+//                 Log.d("testFiltre",filterConcerned.actualValue)
+
+                 if (filterConcerned.isChecked){
+                     if(filterConcerned.filterName == "Cout en mana"){
+                         Log.d("testFiltre","CheckPassage1")
+                         when(filterConcerned.actualValue){
+                             "7 et +" -> listToFilter = listToFilter.filter {myCard -> myCard.manaCost >= 7 }
+                             "Mana (Aucun)" -> listToFilter
+                             else -> listToFilter = listToFilter.filter{ myCard -> myCard.manaCost == filterConcerned.actualValue.toInt()}
+                         }
+                     }
+                     if(filterConcerned.filterName == "Classes"){
+                         when(filterConcerned.actualValue){
+                             "Chasseur de démon" -> listToFilter = listToFilter.filter {myCard -> myCard.classId == 14 }
+                             "Démoniste" -> listToFilter = listToFilter.filter { myCard -> myCard.classId == 12 }
+                             "Classe (Aucune)" -> listToFilter
+                         }
+                     }
+                 }
+             }
+             cardListAdapter.setData(listToFilter)
+        })
     }
 
+}
+
+interface SetFilterListener {
+    fun returnFilter(myFilterList: List<FilterItemForSpinner>)
 }

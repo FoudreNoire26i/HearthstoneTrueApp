@@ -9,20 +9,20 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearthstonetrueapp.R
-import com.example.hearthstonetrueapp.dataClass.model.Card
 import kotlinx.android.synthetic.main.item_filter.view.*
 
-class FilterListAdapter(private val filterListener: setFilterListener?): RecyclerView.Adapter<FilterListAdapter.FilterListViewHolder>() {
+class FilterListAdapter(private val filterListener: SetFilterListener) :
+    RecyclerView.Adapter<FilterListAdapter.FilterListViewHolder>() {
 
     var adapterFilterList = emptyList<FilterItemForSpinner>()
 
-    class FilterListViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){}
+    class FilterListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterListViewHolder {
 
-        val v : View= LayoutInflater.from(parent.context).inflate(R.layout.item_filter,parent,false)
-        val viewHolder = FilterListViewHolder(v)
-        return viewHolder
+        val v: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_filter, parent, false)
+        return FilterListViewHolder(v)
     }
 
     override fun getItemCount(): Int {
@@ -32,16 +32,18 @@ class FilterListAdapter(private val filterListener: setFilterListener?): Recycle
     override fun onBindViewHolder(holder: FilterListViewHolder, position: Int) {
 
         val mySpinner: Spinner = holder.itemView.viewholderSpinner
-        val filterTabValues = holder.itemView.context.resources.getStringArray(adapterFilterList.get(position).filterValueList)
+        val filterTabValues = holder.itemView.context.resources.getStringArray(adapterFilterList[position].filterValueList)
 
-        ArrayAdapter.createFromResource(holder.itemView.context,adapterFilterList.get(position).filterValueList,android.R.layout.simple_spinner_item)
-            .also {
+        ArrayAdapter.createFromResource(
+            holder.itemView.context,
+            adapterFilterList[position].filterValueList, android.R.layout.simple_spinner_item
+        ).also {
                 it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 mySpinner.adapter = it
             }
 
-        mySpinner.onItemSelectedListener= object:
-        AdapterView.OnItemSelectedListener{
+        mySpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -52,21 +54,24 @@ class FilterListAdapter(private val filterListener: setFilterListener?): Recycle
                 position2: Int,
                 id: Long
             ) {
-                if (position2!= 0){
-                    Toast.makeText(parent?.context,"filtre sur : " + filterTabValues[position2] , Toast.LENGTH_SHORT).show()
-                    filterListener?.returnFilter(adapterFilterList.get(position).filterName,filterTabValues[position2])
-                }
+
+                adapterFilterList[position].isChecked = true
+                adapterFilterList[position].actualValue = filterTabValues[position2]
+
+                filterListener.returnFilter(adapterFilterList)
+
+                Toast.makeText(
+                    parent?.context,
+                    "filtre sur : ${ adapterFilterList[position].filterName} -> " + filterTabValues[position2],
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
-    fun setFilter(spinnerList: List<FilterItemForSpinner>){
+    fun setFilter(spinnerList: List<FilterItemForSpinner>) {
         this.adapterFilterList = spinnerList
         notifyDataSetChanged()
-    }
-
-    interface setFilterListener {
-        fun returnFilter(filterOn: String,value: String)
     }
 
 }
