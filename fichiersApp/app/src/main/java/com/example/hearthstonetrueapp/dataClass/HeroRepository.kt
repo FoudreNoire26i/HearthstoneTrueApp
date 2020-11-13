@@ -14,6 +14,7 @@ object HeroRepository {
 
     //var cardListLiveData = MutableLiveData<Card>()
     var heroListLiveData = MutableLiveData<List<Hero>>()
+    var heroTmpList = mutableListOf<Hero>()
 
     /*
             fun getCardById(id: Int): LiveData<Card> {
@@ -45,7 +46,9 @@ object HeroRepository {
                     response.body()?.let {
                         val tmpList = (heroListLiveData.value ?: emptyList()).toMutableList()
                         tmpList.add(it)
-                        heroListLiveData.postValue(tmpList)
+                        heroTmpList.add(it)
+                        heroListLiveData.postValue(heroTmpList)
+                        //heroListLiveData.postValue(tmpList)
                     }
                 }
 

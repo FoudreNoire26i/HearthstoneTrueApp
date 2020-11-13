@@ -38,10 +38,12 @@ class HomeFragment : Fragment() {
         })*/
 
         classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
-            Log.e("blopCLasse", ""+it.get(1).name )
-            classeViewModel.setHeroListByClass()
+            Log.e("blopCLasse", ""+it.get(0).name )
         })
 
+        classeViewModel.heroListLiveData.observe(viewLifecycleOwner, {
+            Log.e("hero 2", ""+it.get(0).name)
+        })
 
         Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
         return root

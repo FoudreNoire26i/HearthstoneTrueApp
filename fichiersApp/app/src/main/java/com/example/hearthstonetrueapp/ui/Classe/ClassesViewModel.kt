@@ -22,15 +22,16 @@ class ClassesViewModel : ViewModel() {
 
     var classeListLiveData: LiveData<List<Classe>> = this.getClasses()
     var heroListLiveData: LiveData<List<Hero>> = Transformations.switchMap(classeListLiveData){
-        getHeroesWithClasses()
+        getHeroesWithClasses(it)
     }
 
     fun setHeroListByClass(){
-        heroListLiveData = this.getHeroesWithClasses()
+        //heroListLiveData = this.getHeroesWithClasses()
     }
 
-    fun getHeroesWithClasses() : LiveData<List<Hero>>{
-        val heroClasseToLoad = classeListLiveData.value?.filter{ it -> it.cardId > 0 } ?: emptyList()
+    fun getHeroesWithClasses(classList : List<Classe>) : LiveData<List<Hero>>{
+        val heroClasseToLoad = classList.filter{ it -> it.cardId > 0 }
+        
         heroClasseToLoad.forEach {
             HeroRepository.getHeroe(it.cardId)
             if (heroClasseToLoad.last() == it ){
