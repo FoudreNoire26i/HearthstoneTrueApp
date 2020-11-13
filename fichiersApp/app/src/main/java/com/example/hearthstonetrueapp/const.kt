@@ -1,6 +1,9 @@
 package com.example.hearthstonetrueapp
 
-const val BASE_URL = "https://us.api.blizzard.com/hearthstone/"
-const val accessToken = "USRcxfthFjLJKNmRyVMTv5sLd78TIaIIqj"
+const val BASE_URL_HS = "https://eu.api.blizzard.com/hearthstone/"
+const val BASE_URL_TOKEN = "https://eu.battle.net/oauth/"
+const val client_id = "29485ac829354019b30635cd74b43807"
+const val client_secret = "ZnObmgWOpyF1DmjnmI1WC7GBbQPZN1gI"
+var accessToken = ""
 const val tokenType = "Bearer"
 const val local = "fr_FR"
