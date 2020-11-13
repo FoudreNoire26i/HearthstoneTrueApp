@@ -37,8 +37,9 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
 
-        ClassRepository.classeListLiveData.observe(viewLifecycleOwner, {
+        classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
             Log.e("blopCLasse", ""+it.get(1).name )
+            classeViewModel.setHeroListByClass()
         })
 
 
