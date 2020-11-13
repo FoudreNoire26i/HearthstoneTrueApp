@@ -47,12 +47,9 @@ class MainActivity : AppCompatActivity(){
         navView.setupWithNavController(navController)
 
         //get current token --> dans le splash screen
-        TokenRepository.tokenLiveData.observe(this,{
-            accessToken = it.access_token
 
-        } )
 
-        Log.i("blopfuck",TokenRepository.getToken().value?.access_token ?:"nul")
+        Log.i("blopfuck", accessToken)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -1,3 +1,4 @@
+
 package com.example.hearthstonetrueapp.dataClass
 
 import android.util.Log
@@ -40,6 +41,7 @@ object HeroRepository {
                     call: Call<Hero>,
                     response: Response<Hero>
                 ) {
+                    Log.i("getHero", "is processing")
                     response.body()?.let {
                         val tmpList = (heroListLiveData.value ?: emptyList()).toMutableList()
                         tmpList.add(it)
