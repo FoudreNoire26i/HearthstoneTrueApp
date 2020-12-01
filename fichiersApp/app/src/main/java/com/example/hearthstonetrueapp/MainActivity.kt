@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
+import com.example.hearthstonetrueapp.bdd.AppDataBase
 import com.example.hearthstonetrueapp.dataClass.TokenRepository
 import com.example.hearthstonetrueapp.ui.home.HomeViewModel
 
@@ -46,10 +48,6 @@ class MainActivity : AppCompatActivity(){
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        //get current token --> dans le splash screen
-
-
-        Log.i("blopfuck", accessToken)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
