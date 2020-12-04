@@ -48,7 +48,9 @@ object CardsRepository {
 
                 response.body()?.let {
                     val tmpList = mutableListOf<Card>()
-                    tmpList?.addAll(it.cards)
+                    tmpList?.addAll(it.cards.filter {
+                            myCard -> myCard.cardTypeId != 3 && myCard.cardTypeId != 10
+                    })
                     val tmp = CardsPageList(cards = tmpList ?: emptyList(), pageCount = it.pageCount, cardCount = it.cardCount, pageId = it.pageId)
                     cardPageLiveData.postValue(tmp)
                     myCardsList.addAll(tmp.cards)
