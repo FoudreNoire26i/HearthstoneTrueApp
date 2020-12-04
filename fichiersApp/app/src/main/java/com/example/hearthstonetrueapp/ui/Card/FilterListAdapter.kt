@@ -54,17 +54,10 @@ class FilterListAdapter(private val filterListener: SetFilterListener) :
                 position2: Int,
                 id: Long
             ) {
-
                 adapterFilterList[position].isChecked = true
-                adapterFilterList[position].actualValue = filterTabValues[position2]
+                adapterFilterList[position].actualValue = position2
 
                 filterListener.returnFilter(adapterFilterList)
-
-                Toast.makeText(
-                    parent?.context,
-                    "filtre sur : ${ adapterFilterList[position].filterName} -> " + filterTabValues[position2],
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }

@@ -20,5 +20,9 @@
             android:id="@+id/nav_cardList"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/CardListTitle" />
+        <item
+            android:id="@+id/nav_classList"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/ClassListTitle" />
     </group>
 </menu>

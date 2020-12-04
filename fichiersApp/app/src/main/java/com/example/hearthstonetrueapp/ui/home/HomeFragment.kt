@@ -6,21 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.hearthstonetrueapp.R
-import com.example.hearthstonetrueapp.dataClass.CardsRepository
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
-import com.example.hearthstonetrueapp.dataClass.HeroRepository
-import com.example.hearthstonetrueapp.dataClass.TokenRepository
-import com.example.hearthstonetrueapp.ui.Classe.ClassesViewModel
+import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var classeViewModel: ClassesViewModel
+    private lateinit var classeViewModel: HeroesViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -30,7 +25,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
         classeViewModel =
-            ViewModelProvider(this).get(ClassesViewModel::class.java)
+            ViewModelProvider(this).get(HeroesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {

@@ -12,4 +12,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="CardListTitle">Mes cartes</string>
     <string name="card_detail_text">Mon Detail</string>
+    <string name="myCreators">Developed by FoudreNoire26i and Freebryze</string>
+    <string name="ClassListTitle">Classes</string>
 </resources>

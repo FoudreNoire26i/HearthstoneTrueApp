@@ -1,19 +1,14 @@
 package com.example.hearthstonetrueapp.ui.Classe
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import com.example.hearthstonetrueapp.dataClass.CardsRepository
+import androidx.lifecycle.*
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
 import com.example.hearthstonetrueapp.dataClass.HeroRepository
-import com.example.hearthstonetrueapp.dataClass.model.Card
-import com.example.hearthstonetrueapp.dataClass.model.CardsPageList
 import com.example.hearthstonetrueapp.dataClass.model.Classe
 import com.example.hearthstonetrueapp.dataClass.model.Hero
+import com.example.hearthstonetrueapp.ui.Card.CardListViewModel
 import com.example.hearthstonetrueapp.ui.home.HomeFragment
 
-class ClassesViewModel : ViewModel() {
+class HeroesViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is cardList Fragment"
@@ -32,13 +27,23 @@ class ClassesViewModel : ViewModel() {
     fun getHeroesWithClasses() : LiveData<List<Hero>>{
         val heroClasseToLoad = classeListLiveData.value?.filter{ it -> it.cardId > 0 } ?: emptyList()
         heroClasseToLoad.forEach {
-            HeroRepository.getHeroe(it.cardId)
             if (heroClasseToLoad.last() == it ){
-                val h = HeroRepository.getHeroe(it.cardId).value
                 return HeroRepository.getHeroe(it.cardId)
+            }
+            else{
+                HeroRepository.getHeroe(it.cardId)
             }
         }
         return HeroRepository.getHeroe(5)
     }
     fun getClasses() = ClassRepository.getClasses()
+
+    companion object Factory: ViewModelProvider.Factory{
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return HeroesViewModel() as T
+        }
+
+    }
 }
