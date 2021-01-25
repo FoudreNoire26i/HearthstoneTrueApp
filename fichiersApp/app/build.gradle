@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.hearthstonetrueapp"
@@ -33,6 +33,54 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    flavorDimensions "environment"
+    productFlavors {
+        postmanWS {
+            dimension "environment"
+            applicationIdSuffix = ".postman"
+            versionNameSuffix "-postman"
+            ext {
+                wsUrl = "https://6feba30d-4657-43a9-83c5-e94a57036ed1.mock.pstmn.io/"
+                apiKey = ""
+            }
+        }
+
+        development {
+            dimension "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix '-dev'
+            ext {
+                wsUrl = "https://eu.api.blizzard.com/hearthstone/"
+                apiKey = ""
+            }
+        }
+
+        recette {
+            dimension "environment"
+            applicationIdSuffix = ".recette"
+            versionNameSuffix '-recette'
+            ext {
+                wsUrl = "https://eu.api.blizzard.com/hearthstone/"
+                apiKey = ""
+            }
+        }
+
+
+        applicationVariants.all { variant ->
+            def dimensions = variant.productFlavors
+            def environment = dimensions[0]
+
+            def wsUrl = environment.ext.wsUrl
+            def apiKey = environment.ext.apiKey
+            variant.buildConfigField "String", "WSUrl", "\"$wsUrl\""
+            variant.buildConfigField "String", "API_KEY", "\"$apiKey\""
+        }
+    }
+
+
+
+
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
