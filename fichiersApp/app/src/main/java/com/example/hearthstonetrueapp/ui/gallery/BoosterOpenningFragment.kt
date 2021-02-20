@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.example.hearthstonetrueapp.R
+import com.example.hearthstonetrueapp.bdd.MyCardsRepository
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.example.hearthstonetrueapp.ui.Card.CardListViewModel
 import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
@@ -43,21 +44,21 @@ class BoosterOpenningFragment : Fragment() {
         val button: Button = view.findViewById(R.id.buttonTheOnlyOne)
         var imageView = view.findViewById<ImageView>(R.id.opened_card_image_view)
         boosterOpenningViewModel.allCardsLiveData.observe(viewLifecycleOwner, Observer { allCards ->
-            button.setOnClickListener {
-                myNewCards = boosterOpenningViewModel.openABooster(allCards, emptyList())
-                Picasso.get().load(Uri.decode(myNewCards[0].imageUrl)).into(imageView)
-                boosterOpenningViewModel.openABooster(allCards, emptyList()).forEach { card ->
-                    Log.e("card trouve : ", card.name)
-                }
-                imageView.setOnClickListener {
-                    if (currentNewCardDisplay < 4){
-                        currentNewCardDisplay++
-                    } else {
-                        currentNewCardDisplay = 0
+            boosterOpenningViewModel.myCardsLiveData.observe(viewLifecycleOwner, Observer { myCards ->
+                button.setOnClickListener {
+                    myNewCards = boosterOpenningViewModel.openABooster(allCards, myCards)
+                    Picasso.get().load(Uri.decode(myNewCards[0].imageUrl)).into(imageView)
+                    imageView.setOnClickListener {
+                        if (currentNewCardDisplay < 4){
+                            currentNewCardDisplay++
+                        } else {
+                            currentNewCardDisplay = 0
+                        }
+                        Picasso.get().load(Uri.decode(myNewCards[currentNewCardDisplay].imageUrl)).into(imageView)
                     }
-                    Picasso.get().load(Uri.decode(myNewCards[currentNewCardDisplay].imageUrl)).into(imageView)
+
                 }
-            }
+            })
         })
     }
 }

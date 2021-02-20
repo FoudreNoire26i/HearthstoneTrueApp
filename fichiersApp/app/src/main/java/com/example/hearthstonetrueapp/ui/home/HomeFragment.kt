@@ -41,7 +41,9 @@ class HomeFragment : Fragment() {
         */
 
         MyCardsRepository.getCards().observe(viewLifecycleOwner, {
-            Log.e("cards", it.get(0).name)
+            it.forEach { card ->
+                Log.e("cards", card.name)
+            }
             //println(it.get(1).bdCardId)
         })
 
