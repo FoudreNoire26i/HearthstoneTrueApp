@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.hearthstonetrueapp.ui.gallery.BoosterOpenningFragment"
+        android:name="com.example.hearthstonetrueapp.ui.booster.BoosterOpenningFragment"
         android:label="@string/menu_booster"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_booster" />
 
     <fragment
         android:id="@+id/nav_cardList"

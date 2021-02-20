@@ -1,4 +1,4 @@
-package com.example.hearthstonetrueapp.ui.gallery
+package com.example.hearthstonetrueapp.ui.booster
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -6,7 +6,6 @@ import com.example.hearthstonetrueapp.bdd.MyCards
 import com.example.hearthstonetrueapp.bdd.MyCardsRepository
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
 import com.example.hearthstonetrueapp.dataClass.model.Card
-import kotlin.random.Random
 
 class BoosterOpenningViewModel : ViewModel() {
 
