@@ -18,7 +18,7 @@ interface MyCardsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg allUsersCards: MyCards)
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCard(cardsToSave: MyCards)
 
     @Delete

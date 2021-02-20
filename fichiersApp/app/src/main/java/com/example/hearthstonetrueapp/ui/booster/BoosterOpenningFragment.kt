@@ -15,6 +15,7 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearthstonetrueapp.R
+import com.example.hearthstonetrueapp.bdd.MyCardsRepository
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.squareup.picasso.Picasso
 
@@ -56,10 +57,12 @@ class BoosterOpenningFragment : Fragment(),BoosterAdapter.BoosterAdapterClickLis
 
 
         boosterOpenningViewModel.allCardsLiveData.observe(viewLifecycleOwner, Observer { allCards ->
-            button.setOnClickListener {
-                myNewCards = boosterOpenningViewModel.openABooster(allCards, emptyList())
-                boosterAdapter.setData(myNewCards)
-            }
+            boosterOpenningViewModel.myCardsLiveData.observe(viewLifecycleOwner, Observer { myCards ->
+                button.setOnClickListener {
+                    myNewCards = boosterOpenningViewModel.openABooster(allCards, myCards)
+                    boosterAdapter.setData(myNewCards)
+                }
+            })
         })
     }
 

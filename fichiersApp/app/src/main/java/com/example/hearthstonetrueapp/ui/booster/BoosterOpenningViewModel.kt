@@ -22,18 +22,62 @@ class BoosterOpenningViewModel : ViewModel() {
         Log.i("card count", "${allCard.count()}")
 
         allCard.forEach {
-            if (!myCards.contains(it.toMyCards())){
-
+            if (isCardFindable(myCards, it.id)){
+                boosterCardsList.add(it)
             }
         }
 
+        var fourOrMaxOfCardsFindable = 4
 
-        for (i in  0..4){
-            var cardFounded = allCard[(Math.random() * allCard.count()).toInt()]
-            boosterCardsList.add(cardFounded)
-            //MyCardsRepository.insertCard(MyCards(hearthstoneCardId = cardFounded.id, name = cardFounded.name))
+        if (boosterCardsList.count() < fourOrMaxOfCardsFindable){
+            fourOrMaxOfCardsFindable = boosterCardsList.count()
         }
-        return boosterCardsList
+
+
+        var result = emptyList<Card>().toMutableList()
+
+        for (i in  0..fourOrMaxOfCardsFindable){
+            var cardFounded = boosterCardsList[(Math.random() * boosterCardsList.count()).toInt()]
+
+            var nbOfFounded : Int = 0
+            if (isAUserCard(myCards, cardId = cardFounded.id)){
+                nbOfFounded = myCards.find {  it.hearthstoneCardId == cardFounded.id  }!!.founded + 1
+
+                //todo : la prochaine ligne est a garnir pour gérer le fait qu'il peut avoir 2 fois la meme carte dans un meme paquet
+                boosterCardsList.remove(cardFounded)
+            } else {
+                nbOfFounded = 1
+            }
+
+            result.add(cardFounded)
+            MyCardsRepository.insertCard(MyCards(hearthstoneCardId = cardFounded.id, name = cardFounded.name, founded = nbOfFounded))
+        }
+
+        return result
+    }
+
+    fun isCardFindable(userCards: List<MyCards>, cardId : Int) : Boolean{
+        if (userCards.count() == 0){
+            return true
+        }
+        userCards.forEach {
+            if (it.hearthstoneCardId == cardId ) {
+                return it.founded < 2
+            }
+        }
+        return false
+    }
+
+    fun isAUserCard(userCards: List<MyCards>, cardId : Int) : Boolean{
+        if (userCards.count() == 0){
+            return false
+        }
+        userCards.forEach {
+            if (it.hearthstoneCardId == cardId) {
+                return true
+            }
+        }
+        return false
     }
 
     companion object Factory: ViewModelProvider.Factory{
