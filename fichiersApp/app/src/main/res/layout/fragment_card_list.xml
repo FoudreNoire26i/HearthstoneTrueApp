@@ -43,17 +43,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
-        app:srcCompat="@android:drawable/arrow_down_float" />
-
-    <ImageView
-        android:id="@+id/filtermenuback"
-        android:layout_width="39dp"
-        android:layout_height="40dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
         app:srcCompat="@android:drawable/arrow_up_float" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

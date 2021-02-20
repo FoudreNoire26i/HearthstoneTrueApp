@@ -37,7 +37,6 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
     val classMap = hashMapOf<String,Int>()
 
     lateinit var myFilterMenu: ImageView
-    lateinit var myFilterMenu2: ImageView
 
 
     override fun onCreateView(
@@ -76,26 +75,11 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         myFilterMenu.setOnClickListener {
             if (filterListRecyclerView.visibility == View.GONE){
                     filterListRecyclerView.visibility = View.VISIBLE
-                    myFilterMenu.visibility = View.GONE
-                    myFilterMenu2.visibility = View.VISIBLE
-
+                    myFilterMenu.setImageResource(android.R.drawable.arrow_up_float)
             }
-
             else if (filterListRecyclerView.visibility == View.VISIBLE){
                 filterListRecyclerView.visibility = View.GONE
-                myFilterMenu.visibility = View.VISIBLE
-                myFilterMenu2.visibility = View.GONE
-            }
-        }
-
-        myFilterMenu2 = view.findViewById(R.id.filtermenuback)
-        myFilterMenu2.setOnClickListener {
-            if (filterListRecyclerView.visibility == View.VISIBLE){
-                filterListRecyclerView.visibility = View.GONE
-            }
-
-            else if (filterListRecyclerView.visibility == View.GONE){
-                filterListRecyclerView.visibility = View.VISIBLE
+                myFilterMenu.setImageResource(android.R.drawable.arrow_down_float)
             }
         }
 
