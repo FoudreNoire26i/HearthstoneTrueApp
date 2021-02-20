@@ -32,13 +32,13 @@ class HomeFragment : Fragment() {
         val textView: TextView = root.findViewById(R.id.text_home)
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })*/
+        })
 
         classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
             Log.e("blopCLasse", ""+it.get(1).name )
             classeViewModel.setHeroListByClass()
         })
-*/
+        */
 
         MyCardsRepository.getCards().observe(viewLifecycleOwner, {
             Log.e("cards", it.get(0).name)
