@@ -1,14 +1,18 @@
 package com.example.hearthstonetrueapp.ui.Card
 
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_image_card.view.*
+
 
 class CardListAdapter(private val clickListener: CardListAdapterClickListener): RecyclerView.Adapter<CardListAdapter.CardListViewHolder>() {
 
@@ -35,7 +39,26 @@ class CardListAdapter(private val clickListener: CardListAdapterClickListener): 
             clickListener.onClick(position, myCard)
         }
 
-        Picasso.get().load(Uri.decode(myCard.imageUrl)).into(holder.itemView.myCardImage)
+        Picasso.get().load(Uri.decode(myCard.imageUrl)).into(holder.itemView.myCardImage,object: com.squareup.picasso.Callback {
+            override fun onSuccess() {
+                val bitmap = (holder.itemView.myCardImage.drawable).toBitmap()
+
+                bitmap.apply {
+                    // set bitmap to first image view
+                    //holder.itemView.myCardImage.setImageBitmap(this)
+
+                    // convert bitmap to grayscale bitmap
+                    toGrayscale()?.apply {
+                        holder.itemView.myCardImage.setImageBitmap(this)
+                    }
+                }
+            }
+
+            override fun onError(e: java.lang.Exception?) {
+                //do smth when there is picture loading error
+            }
+        })
+
     }
 
 
@@ -48,4 +71,27 @@ class CardListAdapter(private val clickListener: CardListAdapterClickListener): 
         fun onClick(dataPosition: Int, card: Card)
     }
 
+    fun Bitmap.toGrayscale():Bitmap?{
+        val bitmap = Bitmap.createBitmap(
+            width,
+            height,
+            Bitmap.Config.ARGB_8888
+        )
+
+        val matrix = ColorMatrix().apply {
+            setSaturation(0f)
+        }
+        val filter = ColorMatrixColorFilter(matrix)
+
+        val paint = Paint().apply {
+            colorFilter = filter
+        }
+
+        Canvas(bitmap).drawBitmap(this, 0f, 0f, paint)
+        return bitmap
+    }
+
 }
+
+
+

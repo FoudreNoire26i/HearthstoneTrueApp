@@ -7,11 +7,17 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Paramètres</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Page d\'acceuil</string>
     <string name="menu_booster">Paquets de cartes</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="CardListTitle">Liste des cartes</string>
     <string name="card_detail_text">Mon Detail</string>
     <string name="myCreators">Developed by FoudreNoire26i and Freebryze</string>
     <string name="ClassListTitle">Classes</string>
+    <string name="HomeText">Bonjour, et bienvenue sur notre application Helpstone \n \n
+    Sur cette application vous retrouverez 3 écrans depuis le menu : \n \n
+        La liste de carte\n
+        L\'ouverture de booster\n
+        La liste des classes\n\n
+        Bonne découverte !
+    </string>
 </resources>

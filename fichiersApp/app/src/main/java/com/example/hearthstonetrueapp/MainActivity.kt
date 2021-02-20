@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.hearthstonetrueapp.bdd.AppDataBase
 import com.example.hearthstonetrueapp.dataClass.TokenRepository
-import com.example.hearthstonetrueapp.ui.home.HomeViewModel
 
 class MainActivity : AppCompatActivity(){
 
@@ -37,8 +36,7 @@ class MainActivity : AppCompatActivity(){
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_cardList,R.id.nav_classList), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home,R.id.nav_gallery, R.id.nav_cardList,R.id.nav_classList), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

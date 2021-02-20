@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
 import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
@@ -32,13 +33,11 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
 
-        classeViewModel.classeListLiveData.observe(viewLifecycleOwner, {
-            Log.e("blopCLasse", ""+it.get(1).name )
+        classeViewModel.classeListLiveData.observe(viewLifecycleOwner) {
             classeViewModel.setHeroListByClass()
-        })
+        }
 
 
-        //Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
         return root
     }
 }
