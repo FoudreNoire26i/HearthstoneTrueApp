@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.*
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
+import com.example.hearthstonetrueapp.ui.booster.BoosterAdapter
+import com.example.hearthstonetrueapp.ui.booster.BoosterOpenningViewModel
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_card_list.*
 
@@ -24,6 +26,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
     private lateinit var cardListViewModel: CardListViewModel
     private lateinit var classesViewModel: HeroesViewModel
+    private lateinit var boosterViewModel: BoosterOpenningViewModel
 
     lateinit var cardListRecyclerView: RecyclerView
     lateinit var filterListRecyclerView: RecyclerView
@@ -48,6 +51,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         activity?.run {
             cardListViewModel = ViewModelProvider(this,CardListViewModel).get()
             classesViewModel = ViewModelProvider(this,HeroesViewModel).get()
+            boosterViewModel = ViewModelProvider( this , BoosterOpenningViewModel).get()
         }
 
 
@@ -86,8 +90,11 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         cardListAdapter = CardListAdapter(this)
         cardListRecyclerView.adapter = cardListAdapter
         cardListRecyclerView.setHasFixedSize(true)
-        cardListViewModel.listeDeCartesLiveData.observe(viewLifecycleOwner, Observer {
-            cardListAdapter.setData(it)
+        cardListViewModel.listeDeCartesLiveData.observe(viewLifecycleOwner, Observer { allCard ->
+            boosterViewModel.myCardsLiveData.observe(viewLifecycleOwner, Observer { myCards ->
+                cardListAdapter.setDataBd(myCards)
+                cardListAdapter.setData(allCard)
+            })
         })
 
 

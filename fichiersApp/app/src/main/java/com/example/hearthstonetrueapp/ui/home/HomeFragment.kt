@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.hearthstonetrueapp.R
+import com.example.hearthstonetrueapp.bdd.MyCardsRepository
 import com.example.hearthstonetrueapp.dataClass.ClassRepository
 import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
 
@@ -37,6 +38,11 @@ class HomeFragment : Fragment() {
             classeViewModel.setHeroListByClass()
         }
 
+        MyCardsRepository.getCards().observe(viewLifecycleOwner, {
+            it.forEach { card ->
+                Log.e("cards", card.name)
+            }
+        })
 
         return root
     }

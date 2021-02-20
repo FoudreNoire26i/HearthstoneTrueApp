@@ -34,6 +34,7 @@ class BoosterAdapter(private val clickListener: BoosterAdapterClickListener): Re
         notifyDataSetChanged()
     }
 
+
     override fun onBindViewHolder(holder: BoosterViewHolder, position: Int) {
         val myCard = boosterAdapterCardList[position]
 

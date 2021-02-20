@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearthstonetrueapp.R
+import com.example.hearthstonetrueapp.bdd.MyCards
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_image_card.view.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.item_image_card.view.*
 class CardListAdapter(private val clickListener: CardListAdapterClickListener): RecyclerView.Adapter<CardListAdapter.CardListViewHolder>() {
 
     var adapterCardList = emptyList<Card>()
+    var userCardList = emptyList<MyCards>()
 
     class CardListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){}
 
@@ -42,15 +44,18 @@ class CardListAdapter(private val clickListener: CardListAdapterClickListener): 
         Picasso.get().load(Uri.decode(myCard.imageUrl)).into(holder.itemView.myCardImage,object: com.squareup.picasso.Callback {
             override fun onSuccess() {
                 val bitmap = (holder.itemView.myCardImage.drawable).toBitmap()
+                if (!isAUserCard(userCardList, myCard.id)){
+                    bitmap.apply {
+                        // set bitmap to first image view
+                        //holder.itemView.myCardImage.setImageBitmap(this)
 
-                bitmap.apply {
-                    // set bitmap to first image view
-                    //holder.itemView.myCardImage.setImageBitmap(this)
-
-                    // convert bitmap to grayscale bitmap
-                    toGrayscale()?.apply {
-                        holder.itemView.myCardImage.setImageBitmap(this)
+                        // convert bitmap to grayscale bitmap
+                        toGrayscale()?.apply {
+                            holder.itemView.myCardImage.setImageBitmap(this)
+                        }
                     }
+                } else {
+                    holder.itemView.myCardImage.setImageBitmap(bitmap)
                 }
             }
 
@@ -65,6 +70,10 @@ class CardListAdapter(private val clickListener: CardListAdapterClickListener): 
     fun setData(cardList: List<Card>) {
         this.adapterCardList = cardList
         notifyDataSetChanged()
+    }
+
+    fun setDataBd(bdList : List<MyCards>) {
+        userCardList = bdList
     }
 
     interface CardListAdapterClickListener {
@@ -89,6 +98,18 @@ class CardListAdapter(private val clickListener: CardListAdapterClickListener): 
 
         Canvas(bitmap).drawBitmap(this, 0f, 0f, paint)
         return bitmap
+    }
+
+    fun isAUserCard(userCards: List<MyCards>, cardId : Int) : Boolean{
+        if (userCards.count() == 0){
+            return false
+        }
+        userCards.forEach {
+            if (it.hearthstoneCardId == cardId) {
+                return true
+            }
+        }
+        return false
     }
 
 }

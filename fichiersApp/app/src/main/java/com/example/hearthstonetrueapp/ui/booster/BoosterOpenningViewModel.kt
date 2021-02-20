@@ -65,7 +65,7 @@ class BoosterOpenningViewModel : ViewModel() {
                 return it.founded < 2
             }
         }
-        return false
+        return true
     }
 
     fun isAUserCard(userCards: List<MyCards>, cardId : Int) : Boolean{

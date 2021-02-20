@@ -18,6 +18,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.hearthstonetrueapp.bdd.AppDataBase
+import com.example.hearthstonetrueapp.bdd.MyCardsRepository
 import com.example.hearthstonetrueapp.dataClass.CardsRepository
 import com.example.hearthstonetrueapp.dataClass.TokenRepository
 
