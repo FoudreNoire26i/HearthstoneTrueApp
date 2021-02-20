@@ -28,12 +28,10 @@ class CardListViewModel : ViewModel() {
     fun getMyCardsFromMutableLiveData() = CardsRepository.getMyCardsFromMutableLiveData()
 
     companion object Factory: ViewModelProvider.Factory{
-
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return CardListViewModel() as T
         }
-
     }
 
 }

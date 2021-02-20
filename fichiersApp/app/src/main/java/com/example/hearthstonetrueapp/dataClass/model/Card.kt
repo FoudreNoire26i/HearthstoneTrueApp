@@ -1,5 +1,6 @@
 package com.example.hearthstonetrueapp.dataClass.model
 
+import com.example.hearthstonetrueapp.bdd.MyCards
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -80,4 +81,8 @@ data class Card (
     @Expose
     val keywordIds : List<Int>
 
-)
+){
+    fun toMyCards() : MyCards {
+        return MyCards(hearthstoneCardId = id, name = name)
+    }
+}

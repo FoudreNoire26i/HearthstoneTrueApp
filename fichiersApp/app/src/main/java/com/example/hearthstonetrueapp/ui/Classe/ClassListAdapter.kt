@@ -34,11 +34,11 @@ class ClassListAdapter(private val clickListener: ClassListAdapterClickListener)
     override fun onBindViewHolder(holder: ClassListViewHolder, position: Int) {
 
         val myHero = adapterClassList[position]
-
+/*
         holder.itemView.setOnClickListener {
             clickListener.onClick(position, myHero)
         }
-
+*/
         Picasso.get().load(Uri.decode(myHero.imageUrl)).into(holder.itemView.myCardImage)
     }
 
