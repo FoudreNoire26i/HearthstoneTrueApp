@@ -7,6 +7,7 @@ import com.example.hearthstonetrueapp.dataClass.model.Card
 
 @Entity
 data class MyCards (
-    @PrimaryKey(autoGenerate = true) val cardId : Int? = null,
-    @ColumnInfo(name = "cardJson") val json : String
+    @PrimaryKey(autoGenerate = false) val hearthstoneCardId : Int,
+    @ColumnInfo(name = "name") val name : String,
+    @ColumnInfo(name = "founded") val founded : Int = 1
 )
