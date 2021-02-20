@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 
 @Database(entities = arrayOf(MyCards::class), version = 1, exportSchema = false)
-abstract class AppDataBase() : RoomDatabase() {
+abstract class AppDataBase : RoomDatabase() {
     //abstract fun myCardsDaoOld() : MyCardsDao
 
     // --- SINGLETON ---
@@ -55,20 +55,20 @@ abstract class AppDataBase() : RoomDatabase() {
                 super.onCreate(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-                /*INSTANCE?.let { database ->
+                INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         populateDatabase(database.myCardsDao())
                     }
-                }*/
+                }
             }
 
             suspend fun populateDatabase(wordDao: MyCardsDao) {
                 // Start the app with a clean database every time.
                 // Not needed if you only populate on creation.
                 //wordDao.deleteAll()
-                wordDao.insertCard(MyCards(json = "Ben"))
-                wordDao.insertCard(MyCards(json = "Mat"))
-                wordDao.insertCard(MyCards(json = "Lmr"))
+                wordDao.insertCard(MyCards(name = "Ben", hearthstoneCardId = 0))
+                wordDao.insertCard(MyCards(name = "Mat", hearthstoneCardId = 1))
+                wordDao.insertCard(MyCards(name = "Lmr", hearthstoneCardId = 2))
             }
         }
 
