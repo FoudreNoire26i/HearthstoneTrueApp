@@ -8,8 +8,8 @@ interface MyCardsDao {
     @Query("SELECT * FROM mycards")
     fun getAll(): List<MyCards>
 
-    @Query("SELECT * FROM mycards WHERE cardId IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<MyCards>
+    @Query("SELECT * FROM mycards WHERE hearthstoneCardId IN (:cardsId)")
+    fun loadAllByIds(cardsId: IntArray): List<MyCards>
 /*
     @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
             "last_name LIKE :last LIMIT 1")

@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 object MyCardsRepository {
@@ -16,14 +18,17 @@ object MyCardsRepository {
          database = AppDataBase.getDatabase(context, scope)
     }
 
-    fun getCards() : List<MyCards>?{
-        database.myCardsDao().getAll().let { cardByIdLiveData.postValue(it) }
-        return cardByIdLiveData.value
-
+    fun getCards() : MutableLiveData<List<MyCards>> {
+        GlobalScope.launch {
+            database.myCardsDao().getAll().let { cardByIdLiveData.postValue(it) }
+        }
+        return cardByIdLiveData
     }
 
     fun insertCard(c: MyCards){
-        database.myCardsDao().insertCard(c)
+        GlobalScope.launch {
+            database.myCardsDao().insertCard(c)
+        }
     }
 
     fun closeDb() {
