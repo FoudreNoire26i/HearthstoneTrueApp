@@ -1,9 +1,13 @@
 package com.example.hearthstonetrueapp.ui.Card
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +17,7 @@ import androidx.recyclerview.widget.*
 import com.example.hearthstonetrueapp.R
 import com.example.hearthstonetrueapp.dataClass.model.Card
 import com.example.hearthstonetrueapp.ui.Classe.HeroesViewModel
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_card_list.*
 
 class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener, SetFilterListener {
@@ -31,6 +36,10 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
 
     val classMap = hashMapOf<String,Int>()
 
+    lateinit var myFilterMenu: ImageView
+    lateinit var myFilterMenu2: ImageView
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +55,7 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         return inflater.inflate(R.layout.fragment_card_list, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,6 +71,33 @@ class CardListFragment: Fragment(), CardListAdapter.CardListAdapterClickListener
         filterListRecyclerView.layoutManager = filterListGridLayoutManager
 //        snapHelper.attachToRecyclerView(filterListRecyclerView)
 
+
+        myFilterMenu = view.findViewById(R.id.filtermenu)
+        myFilterMenu.setOnClickListener {
+            if (filterListRecyclerView.visibility == View.GONE){
+                    filterListRecyclerView.visibility = View.VISIBLE
+                    myFilterMenu.visibility = View.GONE
+                    myFilterMenu2.visibility = View.VISIBLE
+
+            }
+
+            else if (filterListRecyclerView.visibility == View.VISIBLE){
+                filterListRecyclerView.visibility = View.GONE
+                myFilterMenu.visibility = View.VISIBLE
+                myFilterMenu2.visibility = View.GONE
+            }
+        }
+
+        myFilterMenu2 = view.findViewById(R.id.filtermenuback)
+        myFilterMenu2.setOnClickListener {
+            if (filterListRecyclerView.visibility == View.VISIBLE){
+                filterListRecyclerView.visibility = View.GONE
+            }
+
+            else if (filterListRecyclerView.visibility == View.GONE){
+                filterListRecyclerView.visibility = View.VISIBLE
+            }
+        }
 
         cardListAdapter = CardListAdapter(this)
         cardListRecyclerView.adapter = cardListAdapter

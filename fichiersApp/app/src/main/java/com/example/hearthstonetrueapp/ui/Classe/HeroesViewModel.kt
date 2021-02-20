@@ -25,7 +25,7 @@ class HeroesViewModel : ViewModel() {
     }
 
     fun getHeroesWithClasses(classList : List<Classe>) : LiveData<List<Hero>>{
-        val heroClasseToLoad = classList.filter{ it -> it.cardId > 0 }
+        val heroClasseToLoad = classList.filter{ it.cardId > 0 }
         
         heroClasseToLoad.forEach {
             if (heroClasseToLoad.last() == it ){

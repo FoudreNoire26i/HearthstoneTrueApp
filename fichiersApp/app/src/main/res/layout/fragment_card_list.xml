@@ -19,38 +19,41 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <TextView
-        android:id="@+id/filterTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Filtre :"
-        android:textSize="18sp"
-
-        android:layout_margin="6dp"
-
-        android:textStyle="bold"
-        android:gravity="center"
-
-        app:layout_constraintEnd_toStartOf="@+id/filterListRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
-        app:layout_constraintBottom_toTopOf="@+id/cardListRecyclerView"
-        app:layout_constraintHorizontal_weight="2"
-
-        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filterListRecyclerView"
         android:layout_width="0dp"
         android:layout_height="50dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/filterTextView"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/cardListRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_weight="9"
 
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/filtermenu"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageView
+        android:id="@+id/filtermenuback"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
+        app:srcCompat="@android:drawable/arrow_up_float" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -61,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterListRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/filtermenu"
 
         app:spanCount="3"
 

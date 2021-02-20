@@ -67,7 +67,7 @@ object HeroRepository {
     }
 
     fun heroIsLoaded(cardId : Int) : Boolean{
-        heroListLiveData.value?.forEach {
+        heroTmpList.forEach {
             if (it.id == cardId)
                 return true
         }

@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         })
 
 
-        Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
+        //Log.e("blop1", ""+ClassRepository.getClasses().value?.size )
         return root
     }
 }
